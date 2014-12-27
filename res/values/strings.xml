@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="tip">请选择</string>
+    <string name="app_name">期权学习软件</string>
+    <string name="title_activity_login_edit">LoginEditActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_change_pw">ChangePWActivity</string>
+    <string name="login_username_hint">请输入昵称&#8230;</string>
+    <string name="login_password_hint">请输入密码&#8230;</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="register_txt1">还没有账号？</string>
+    <string name="register_txt2">立即注册 ></string>
+    <string name="login_account">昵称: </string>
+    <string name="login_pwd">密码:</string>
+    <string name="login_email">邮箱： </string>
+    <string name="pull_to_refresh_top_pull">下拉刷新</string>
+    <string name="pull_to_refresh_top_release">释放刷新</string>
+    <string name="pull_to_refresh_top_refreshing">加载中&#8230;</string>
+    <string name="pull_to_refresh_bottom_pull">继续拖动</string>
+    <string name="pull_to_refresh_bottom_release">放开装载更多</string>
+    <string name="pull_to_refresh_bottom_refreshing">正在加载数据..</string>
+    <string name="title_activity_down_load">DownLoadActivity</string>
+    <string name="title_activity_commet">CommetActivity</string>
+
+</resources>

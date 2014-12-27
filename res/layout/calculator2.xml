@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBackground"
+    android:orientation="vertical" >
+
+    <com.linyongan.view.TitleViewWithCleanBtn
+        android:id="@+id/TitleView2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" >
+    </com.linyongan.view.TitleViewWithCleanBtn>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="请选择："
+                android:textColor="@color/tip" />
+
+            <RadioGroup
+                android:id="@+id/Button2_radioGroup1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg"
+                android:orientation="horizontal"
+                android:paddingLeft="2dp" >
+
+                <RadioButton
+                    android:id="@+id/Button2_radioButton1"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="多头"
+                    android:textColor="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/Button2_radioButton2"
+                    android:layout_width="110dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="空头"
+                    android:textColor="@android:color/black" />
+            </RadioGroup>
+
+            <RadioGroup
+                android:id="@+id/Button2_radioGroup2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_bg"
+                android:orientation="vertical"
+                android:paddingLeft="2dp" >
+
+                <RadioButton
+                    android:id="@+id/Button2_radioButton3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="认购期权到期收益"
+                    android:textColor="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/Button2_radioButton4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="认沽期权到期收益"
+                    android:textColor="@android:color/black" />
+
+                <RadioButton
+                    android:id="@+id/Button2_radioButton5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="股票到期收益"
+                    android:textColor="@android:color/black" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="请输入数据："
+                android:textColor="@color/tip" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg" >
+
+                <TableRow
+                    android:id="@+id/Button2_tableRow1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp"
+                    android:paddingTop="5dp" >
+
+                    <TextView
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="标的资产到期价格"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/Button2_editText1"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberDecimal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="行权价格"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/Button2_editText2"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberDecimal" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/Button2_tableRow2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="5dp" >
+
+                    <TextView
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="股票到期价格"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/Button2_editText3"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberDecimal" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="股票价格"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/Button2_editText4"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberDecimal" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/Button2_tableRow3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="75dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="5dp"
+                        android:text="期权权益金"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/Button2_editText5"
+                        android:layout_width="70dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberDecimal" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/Button2_out_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_bg"
+                android:padding="8dp"
+                android:text="计算结果：\n"
+                android:textColor="@color/result"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/Button2_calculate_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/common_btn_selector"
+                android:padding="8dp"
+                android:text="计算"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

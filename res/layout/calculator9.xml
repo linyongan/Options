@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBackground"
+    android:orientation="vertical" >
+
+    <com.linyongan.view.TitleViewWithCleanBtn
+        android:id="@+id/TitleView2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp" >
+    </com.linyongan.view.TitleViewWithCleanBtn>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                android:text="请选择："
+                android:textColor="@color/tip" />
+
+            <RadioGroup
+                android:id="@+id/loan_RadioGroup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg"
+                android:orientation="horizontal" >
+
+                <RadioButton
+                    android:id="@+id/loan_RadioButton1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingRight="60dp"
+                    android:text="等额本息"
+                    android:textColor="@android:color/black" >
+                </RadioButton>
+
+                <RadioButton
+                    android:id="@+id/loan_RadioButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="等额本金"
+                    android:textColor="@android:color/black" >
+                </RadioButton>
+            </RadioGroup>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_bg" >
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="5dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="贷款本金"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/loan_principal_et"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberDecimal" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="还款月数"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/loan_month_et"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:padding="8dp"
+                        android:text="年利率"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/loan_yearRate_et"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:inputType="number|numberDecimal" />
+                </TableRow>
+            </TableLayout>
+
+            <TextView
+                android:id="@+id/loan_out_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_bg"
+                android:padding="8dp"
+                android:text="计算结果：\n"
+                android:textColor="@color/result"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/loan_calculate_bt"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/common_btn_selector"
+                android:padding="8dp"
+                android:text="计算"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

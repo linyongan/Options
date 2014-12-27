@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.linyongan.ui"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 允许应用打开网络套接口 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="19" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Black.NoTitleBar" >
+        <activity android:name="com.linyongan.ui.LearnActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="LearnActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.LoginActivity"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="LoginActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.CalculateActivity"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="CalculateActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.TestActivity"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="TestActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.SearchActivity"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="SearchActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.QuestionActivity"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="QuestionActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.AboutActivity"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="AboutActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator1" >
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator2" >
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator3" >
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator4" >
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator5" >
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator6" >
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator7" >
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator8" >
+        </activity>
+        <activity android:name="com.linyongan.ui.Calculator9" >
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.TestingActivity"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity android:name="com.linyongan.ui.TestCollectActivity" >
+        </activity>
+        <activity android:name="com.linyongan.ui.TestGradeActivity" >
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.MyInfoActivity"
+            android:label="@string/title_activity_login_edit" >
+            <intent-filter>
+                <action android:name="LoginEditActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.ChangePWActivity"
+            android:label="@string/title_activity_change_pw" >
+        </activity>
+        <activity android:name="com.linyongan.ui.RegisterActivity" >
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.FeedbackListActivity"
+            android:theme="@style/AppTheme" >
+            <intent-filter>
+                <action android:name="SendFeedbackActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.linyongan.ui.SendFeedbackActivity" >
+        </activity>
+        <activity
+            android:name="com.linyongan.ui.DownLoadActivity"
+            android:label="@string/title_activity_down_load" >
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBackground"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_titleview" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginTop="5dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_bg"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:text="市场先生的使命"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="        纵观历史，每次金融危机的发生，背后总有一群疯狂的投资者。可以说，投资者的不成熟导致金融危机的发生的一项非常重要的因素。而中国正在走向世界，未来中国的金融市场必定进一步开放，但中国境内投资者主要以散户为主（约80%的投资者为散户），投资者的知识水平比较低，投资心理不成熟。这可能会给我们的金融市场带来巨大的威胁。只有加紧对投资者教育，加强投资者知识水平，才能避免金融危机发生。目前，我国的传统教育在金融普及教育上非常落后，大学前的金融普及教育完全空白。大学后的金融教育主要以职业教育为主，金融普及教育水平依然十分落后。而且，当前我们并没有发现中国传统教育对改变落后的金融普及教育事业上有丝毫的进展。可见，传统教育在可见的未来，无法承担起普及金融教育这一项职责。从市场上来看，由于市场的短视性与逐利性，金融普及教育也未能在市场上得到重视。面对以上事实，我们产生一种想法做一款可以推动普及金融知识的手机软件，去开拓一个市场，希望可以通过我们的努力，吸引更多的人进入这个市场，更多的资源投入到这个市场。从而，让市场承担起金融普及教育这一项社会功能。\n        市场不是一个人，市场是每一个人。金融市场也是一样，只有当每个投资者都成为成熟的投资者，金融市场才会是一个成熟的市场。市场在成长，也是每个人在成长。你的成长就是我们的使命。市场先生，与你共同成长！"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shape_bg"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:text="联系我们"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="    电子邮箱：380877206@qq.com\n    微信：市场先生\n    微博：市场先生"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/shape_bg"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="5dp"
+                    android:text="法律声明"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="       一、本软件资源大部分来源于“上海证券交易所股票期权投资者教育专区”引用网站为http://edu.sse.com.cn/option \n       二、本软件旨在帮助投资者了解、熟悉期权相关知识，不构成任何投资建议。\n       三、本软件对所提供的内容力求准确、完整和及时，但并不对其准确性、完整性和及时性做出任何保证。对任何因直接或间接使用本专区内容而造成的损失，包括但不限于因有关内容不准确、不完整而导致的损失，我们不承担任何法律责任。\n       四、本软件亦不保证所设置的外部链接的准确性和完整性。任何机构或者个人通过本专区与其他网站的链接而获得其他网站内容，其风险责任自负。\n       五、本声明在本软件相关页面发布。郑重提示：任何机构或者个人使用本软件，即被视为已完全知悉、理解并接受本声明的全部内容。我们本声明的修改、解释权。"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

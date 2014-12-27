@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBackground"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_titleview" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" >
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_base_height"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/base_edit_input" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/view_base_height"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/login_email"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/register_e"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/view_base_height"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1.0"
+                android:background="@color/transparent" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_base_height"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/base_edit_input" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/view_base_height"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/login_account"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/register_username_et"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/view_base_height"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1.0"
+                android:background="@color/transparent"
+                android:text="御风" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/view_base_height"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/base_edit_input" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/view_base_height"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="@string/login_pwd"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/register_password_et"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/view_base_height"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1.0"
+                android:background="@color/transparent"
+                android:text="123456" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:id="@+id/register_register_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@drawable/common_btn_selector"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_large" />
+
+</LinearLayout>

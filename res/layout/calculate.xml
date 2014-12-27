@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:background="@color/layoutBackground"
+    android:orientation="vertical" >
+
+    <include layout="@layout/include_titleview" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="5dp" >
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal" >
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:id="@+id/derivative_Button1"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c1"
+                    android:paddingTop="20dp"
+                    android:text="理论价格"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/derivative_Button2"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c2"
+                    android:paddingTop="20dp"
+                    android:text="到期收益"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/derivative_Button3"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c3"
+                    android:paddingTop="20dp"
+                    android:text="组合分析"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:id="@+id/derivative_Button4"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c4"
+                    android:paddingTop="20dp"
+                    android:text="保证金"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/derivative_Button6"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c5"
+                    android:paddingTop="20dp"
+                    android:text="期权价值"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/derivative_Button7"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c6"
+                    android:paddingTop="20dp"
+                    android:text="杠杆倍数"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal" >
+
+                <Button
+                    android:id="@+id/derivative_Button5"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c7"
+                    android:paddingTop="20dp"
+                    android:text="平价套利"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/derivative_Button8"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c8"
+                    android:paddingTop="20dp"
+                    android:text="个人理财"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/derivative_Button9"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/test_commonbtn_selector"
+                    android:drawablePadding="-15dp"
+                    android:drawableTop="@drawable/c7"
+                    android:paddingTop="20dp"
+                    android:text="贷款计算"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>

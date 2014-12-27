@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/layoutBackground"
+    android:gravity="center_vertical|center_horizontal"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/testing_item1_tv"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_bg"
+        android:padding="8dp"
+        android:text="你一共答对了6题\n你的分数是60分。"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/testing_item1_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:background="@drawable/common_btn_selector"
+        android:layout_margin="5dp"
+        android:text="提交并查看成绩"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/testing_item1_btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/common_btn_selector"
+        android:padding="8dp"
+        android:text="返回查看具体的答题情况"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+</LinearLayout>

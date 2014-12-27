@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/layoutBackground"
+    android:orientation="horizontal"
+     >
+
+    <TextView
+        android:id="@+id/comment_master"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#003399"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/comment_reply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="回复"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/comment_visitor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#003399"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/comment_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="评论内容"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</LinearLayout>

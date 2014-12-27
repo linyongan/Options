@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     android:background="@color/layoutBackground" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" 
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/testing_item_relativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@drawable/shape_bg" >
+
+                <TextView
+                    android:id="@+id/testing_item_textview1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="问题："
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp" />
+
+                <RadioGroup
+                    android:id="@+id/testing_item_radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/testing_item_textview1" >
+
+                    <RadioButton
+                        android:id="@+id/testing_item_radioButton1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="A.选项一"
+                        android:textColor="@android:color/black" />
+
+                    <RadioButton
+                        android:id="@+id/testing_item_radioButton2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="B.选项二"
+                        android:textColor="@android:color/black" />
+
+                    <RadioButton
+                        android:id="@+id/testing_item_radioButton3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="C.选项三"
+                        android:textColor="@android:color/black" />
+
+                    <RadioButton
+                        android:id="@+id/testing_item_radioButton4"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="D.选项四"
+                        android:textColor="@android:color/black" />
+                </RadioGroup>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/testing_item_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/testing_item_relativeLayout"
+                android:drawableRight="@drawable/test_right"
+                android:paddingLeft="5dp"
+                android:text="你选择的答案正确."
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/testing_item_wrong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/testing_item_relativeLayout"
+                android:drawableRight="@drawable/test_wrong"
+                android:paddingLeft="5dp"
+                android:text="你选择的答案错误."
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/testing_item_rightAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/testing_item_wrong"
+                android:paddingLeft="5dp"
+                android:text="正确答案是"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
