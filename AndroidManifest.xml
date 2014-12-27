@@ -139,8 +139,7 @@
         <activity android:name="com.linyongan.ui.SendFeedbackActivity" >
         </activity>
         <activity
-            android:name="com.linyongan.ui.DownLoadActivity"
-            android:label="@string/title_activity_down_load" >
+            android:name="com.linyongan.ui.DownLoadActivity" >
         </activity>
     </application>
 

@@ -36,24 +36,25 @@ public class FeedbackListActivity extends BaseActivity {
 	private ListView mMsgListView;
 	private static final int STATE_REFRESH = 0;// 下拉刷新
 	private static final int STATE_MORE = 1;// 加载更多
-	private int limit = 5; // 每页的数据是10条
+	private int limit = 5; // 每页的数据是5条
 	private int curPage = 0; // 当前页的编号，从0开始
+	/** 消息列表 */
 	private List<Feedback> FeedbackList = new ArrayList<Feedback>();
+	/** 消息列表对应的所有评论列表 */
 	private List<List<Comment>> commentList = new ArrayList<List<Comment>>();
 	int i = 0;
+	/** 0：下拉刷新 /1：加载更多 */
 	int actionType = 0;
 	/** 从哪里开始加载 */
 	int skip = 0;
 
 	@Override
 	public void setContentView() {
-		// TODO Auto-generated method stub
 		setContentView(R.layout.feedback_list);
 	}
 
 	@Override
 	public void initViews() {
-		// TODO Auto-generated method stub
 		mPullToRefreshView = (PullToRefreshListView) findViewById(R.id.feedback_lv);
 		loadingLayout = mPullToRefreshView.getLoadingLayoutProxy();
 		mMsgListView = mPullToRefreshView.getRefreshableView();
@@ -64,7 +65,6 @@ public class FeedbackListActivity extends BaseActivity {
 
 	@Override
 	public void initListeners() {
-		// TODO Auto-generated method stub
 		backButton.setOnClickListener(new ButtonListener());
 		sendButton.setOnClickListener(new ButtonListener());
 		// 滑动监听
@@ -108,6 +108,7 @@ public class FeedbackListActivity extends BaseActivity {
 						// 下拉刷新(从第一页开始装载数据)
 						commentList = new ArrayList<List<Comment>>();
 						actionType = STATE_REFRESH;
+						// 设置从第一条数据开始加载
 						skip = 0;
 						queryData(actionType);
 					}
@@ -126,7 +127,6 @@ public class FeedbackListActivity extends BaseActivity {
 
 	@Override
 	public void initData() {
-		// TODO Auto-generated method stub
 		super.addMenu(this);
 		// 初始化下拉刷新和加载更多
 		loadingLayout.setLastUpdatedLabel("");
@@ -140,7 +140,7 @@ public class FeedbackListActivity extends BaseActivity {
 				(List<Feedback>) FeedbackList);
 		mMsgListView.setAdapter(adapter);
 		progress.setVisibility(View.VISIBLE);
-		// 默认加载第一页
+		// 进入界面，默认加载第一页
 		actionType = STATE_REFRESH;
 		skip = 0;
 		queryData(actionType);
@@ -180,7 +180,6 @@ public class FeedbackListActivity extends BaseActivity {
 
 			@Override
 			public void onSuccess(List<Feedback> arg0) {
-				// TODO Auto-generated method stub
 				if (arg0.size() > 0) {
 					FeedbackList = arg0;
 					fetchComment();
@@ -199,49 +198,55 @@ public class FeedbackListActivity extends BaseActivity {
 
 			@Override
 			public void onError(int arg0, String arg1) {
-				// TODO Auto-generated method stub
 				progress.setVisibility(View.GONE);
 				mPullToRefreshView.onRefreshComplete();
+				// 显示错误
 				Util.errorFul(FeedbackListActivity.this, arg0);
 			}
 		});
 	}
 
 	/**
-	 * 查找评论
-	 * 
-	 * @param feedback
+	 * 迭代加载评论列表
 	 */
 	public void fetchComment() {
-		Feedback f = FeedbackList.get(i);
-		BmobQuery<Comment> query = new BmobQuery<Comment>();
-		query.addWhereRelatedTo("relation", new BmobPointer(f));
-		query.order("createdAt");
-		query.findObjects(this, new FindListener<Comment>() {
-			@Override
-			public void onSuccess(List<Comment> data) {
-				// TODO Auto-generated method stub
-				if (data.size() != 0) {
-					commentList.add(data);
-				} else {
-					addNormalComment();
+		while (i < FeedbackList.size() && FeedbackList.get(i).getComment() == 0) {
+			i++;
+			addNormalComment();
+		}
+		if (i < FeedbackList.size()) {
+			Feedback f = FeedbackList.get(i);
+			BmobQuery<Comment> query = new BmobQuery<Comment>();
+			query.addWhereRelatedTo("relation", new BmobPointer(f));
+			query.order("createdAt");
+			query.findObjects(this, new FindListener<Comment>() {
+				@Override
+				public void onSuccess(List<Comment> data) {
+					if (data.size() != 0) {
+						commentList.add(data);
+					} else {
+						// 没有评论，则添加默认评论，但是在Adapter里屏蔽掉，不显示出来
+						addNormalComment();
+					}
+					i++;
+					if (i < FeedbackList.size()) {// 还没有加载完成，继续迭代
+						fetchComment();
+					} else {
+						// 已加载完成
+						finishLoadComment();
+					}
 				}
-				i++;
-				if (i < FeedbackList.size()) {
-					fetchComment();
-				} else {
-					finishLoadComment();
-					i = 0;
-				}
-			}
 
-			@Override
-			public void onError(int arg0, String arg1) {
-				for (Feedback f : FeedbackList)
-					addNormalComment();
-				finishLoadComment();
-			}
-		});
+				@Override
+				public void onError(int arg0, String arg1) {
+					for (Feedback f : FeedbackList)
+						addNormalComment();
+					finishLoadComment();
+				}
+			});
+		}else{
+			finishLoadComment();
+		}
 	}
 
 	/**
@@ -263,12 +268,10 @@ public class FeedbackListActivity extends BaseActivity {
 	 */
 	public void finishLoadComment() {
 		if (actionType == STATE_REFRESH) {
-			// 当是下拉刷新操作时，将当前页的编号重置为0，并把bankCards清空，重新添加
+			// 当是下拉刷新操作时，将当前页的编号重置为0，并把FeedbackList清空，重新添加
 			curPage = 0;
-			System.out
-					.println("actionType == STATE_REFRESH时curPage:" + curPage);
 			// 通知Adapter数据更新
-			adapter.clean((List<Feedback>) FeedbackList, commentList);
+			adapter.clear((List<Feedback>) FeedbackList, commentList);
 		} else {
 			// 通知Adapter数据更新
 			adapter.refresh((List<Feedback>) FeedbackList, commentList);
@@ -277,8 +280,6 @@ public class FeedbackListActivity extends BaseActivity {
 		if (FeedbackList.size() >= limit) {
 			curPage++;
 			skip = curPage * limit;
-			System.out.println("FeedbackList.size() >= limit时curPage:"
-					+ curPage + "  skip " + skip);
 		} else {
 			// 如果消息的数目小于5条
 			skip = FeedbackList.size();
@@ -286,6 +287,7 @@ public class FeedbackListActivity extends BaseActivity {
 		progress.setVisibility(View.GONE);
 		// 停止加载动画
 		mPullToRefreshView.onRefreshComplete();
+		i = 0;
 	}
 
 	@Override

@@ -73,18 +73,16 @@ public class CommentAdapter extends BaseAdapter {
 			viewHolder.master.setVisibility(View.GONE);
 			viewHolder.reply.setVisibility(View.GONE);
 			viewHolder.visitor.setText(comment.getVisitor());
-			viewHolder.content.setText(": "+comment.getCommentContent());
+			
 			break;
 		case 1:
 			viewHolder.visitor.setVisibility(View.GONE);
 			viewHolder.reply.setVisibility(View.GONE);
 			viewHolder.master.setText(comment.getMaster());
-			viewHolder.content.setText(": "+comment.getCommentContent());
 			break;
 		case 2:
 			viewHolder.master.setText(comment.getVisitor());
 			viewHolder.visitor.setText(comment.getMaster());
-			viewHolder.content.setText(": "+comment.getCommentContent());
 			break;
 		case 3:
 			viewHolder.master.setVisibility(View.GONE);
@@ -92,13 +90,8 @@ public class CommentAdapter extends BaseAdapter {
 			viewHolder.visitor.setVisibility(View.GONE);
 			viewHolder.content.setVisibility(View.GONE);
 			break;
-		case 4:
-			viewHolder.master.setVisibility(View.GONE);
-			viewHolder.reply.setVisibility(View.GONE);
-			viewHolder.visitor.setVisibility(View.GONE);
-			viewHolder.content.setText(comment.getCommentContent());
-			break;
 		}
+		viewHolder.content.setText(": "+comment.getCommentContent());
 		return convertView;
 	}
 

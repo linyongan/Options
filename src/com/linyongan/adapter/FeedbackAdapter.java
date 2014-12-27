@@ -46,7 +46,6 @@ public class FeedbackAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	/** FeedbackAdapter必须有commentList，否则重绘item时评论列表会乱甚至消失 */
 	private List<List<Comment>> commentList = new ArrayList<List<Comment>>();
-	/** 用于动态更新listView的高度 */
 	private Activity context;
 	private int year1 = 0;
 	private int year2 = 0;
@@ -64,9 +63,9 @@ public class FeedbackAdapter extends BaseAdapter {
 	private PopupWindow popup;
 	/** 发表评论的类型 */
 	int type = 0;
-	/** 被回复的人 */
+	/** 目前被回复的人 */
 	private String master;
-	/** 发表评论的人 */
+	/** 目前发表评论的人 */
 	private String visitor;
 	/** 填写评论的EditText */
 	private EditText content;
@@ -131,7 +130,10 @@ public class FeedbackAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				if (user == null) {
+					Util.ShowToast(context, "请先登录。");
+					return;
+				}
 				saveLove(feedback, holder.love);
 			}
 		});
@@ -139,28 +141,37 @@ public class FeedbackAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				if (user == null) {
+					Util.ShowToast(context, "请先登录。");
+					return;
+				}
 				if (user.getUsername().equals(
 						holder.contacts.getText().toString()))
+					// 如果是自己评论自己
 					type = 1;
 				else
+					// 评论别人
 					type = 0;
 				master = holder.contacts.getText().toString();
 				visitor = user.getUsername();
-				popupView("来评论一句吧", feedback, commentAdapter);
+				popupView("来评论一句吧", feedback, commentAdapter, holder.comment);
 			}
 		});
+		// 通过点击评论列表，直接回复别人的评论
 		holder.commetLv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
+				if (user == null) {
+					Util.ShowToast(context, "请先登录。");
+					return;
+				}
 				TextView chirlmaster = (TextView) view
 						.findViewById(R.id.comment_master);
 				TextView chirlvisitor = (TextView) view
 						.findViewById(R.id.comment_visitor);
-				// 之前客人评论主人，现在我们要回复客人,且客人不能是自己
+				// 之前“游客”评论“发帖人”，现在我们要回复“游客”,且游客不能是自己
 				if (TextUtils.isEmpty(chirlmaster.getText().toString())) {
 					if (chirlvisitor.getText().toString()
 							.equals(user.getUsername())) {
@@ -169,9 +180,10 @@ public class FeedbackAdapter extends BaseAdapter {
 						type = 2;
 						master = chirlvisitor.getText().toString();
 						visitor = user.getUsername();
-						popupView("回复" + master, feedback, commentAdapter);
+						popupView("回复" + master, feedback, commentAdapter,
+								holder.comment);
 					}
-				} else {
+				} else {// XXX回复XXX
 					if (user.getUsername().equals(
 							chirlmaster.getText().toString()))
 						Util.ShowToast(context, "自己不能回复自己");
@@ -179,14 +191,14 @@ public class FeedbackAdapter extends BaseAdapter {
 						type = 2;
 						master = chirlmaster.getText().toString();
 						visitor = user.getUsername();
-						popupView("回复" + master, feedback, commentAdapter);
+						popupView("回复" + master, feedback, commentAdapter,
+								holder.comment);
 					}
 				}
 			}
 		});
 
 		holder.commetLv.setAdapter(commentAdapter);
-		// holder.commetLv.setFocusable(false);
 		setListViewHeightBasedOnChildren(holder.commetLv);
 
 		holder.content.setText(feedback.getContent());
@@ -204,6 +216,8 @@ public class FeedbackAdapter extends BaseAdapter {
 		}
 		if (feedback.getComment() != 0) {
 			holder.comment.setText(feedback.getComment() + "");
+		} else {
+			holder.comment.setText("评论");
 		}
 
 		if (Util.isSDCardUsabled()) {
@@ -233,7 +247,7 @@ public class FeedbackAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-	public void clean(List<Feedback> feedbacks, List<List<Comment>> commentList) {
+	public void clear(List<Feedback> feedbacks, List<List<Comment>> commentList) {
 		fbs = feedbacks;
 		this.commentList = commentList;
 		notifyDataSetChanged();
@@ -255,21 +269,17 @@ public class FeedbackAdapter extends BaseAdapter {
 	 * @param feedback
 	 */
 	private void saveLove(final Feedback feed, TextView love_tv) {
-		if (user == null) {
-			Util.ShowToast(context, "请先登录。");
-			return;
-		}
 		if (feed.isMyLove()) {
 			Util.ShowToast(context, "您已经赞过啦");
 			return;
 		}
 		feed.setLove(feed.getLove() + 1);
+		feed.setMyLove(true);
 		love_tv.setTextColor(Color.parseColor("#003399"));
 		love_tv.setText(feed.getLove() + "(已赞)");
 		feed.update(context, new UpdateListener() {
 			@Override
 			public void onSuccess() {
-				feed.setMyLove(true);
 				Util.ShowToast(context, "点赞成功~");
 			}
 
@@ -283,9 +293,8 @@ public class FeedbackAdapter extends BaseAdapter {
 	 * 弹出填写评论的窗口
 	 */
 	private void popupView(String hint, final Feedback feed,
-			final CommentAdapter commentAdapter) {
+			final CommentAdapter commentAdapter, final TextView comment_tv) {
 		View view = inflater.inflate(R.layout.comment_popup, null);
-		// 创建PopupWindow对象
 		popup = new PopupWindow(view, LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT, true);
 		// 将PopupWindow显示在指定位置
@@ -302,21 +311,20 @@ public class FeedbackAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				// 点击窗口则外关闭窗口
 				if (popup != null && popup.isShowing())
 					popup.dismiss();
 			}
 		});
 		commit.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if (!TextUtils.isEmpty(content.getText().toString()))
+				// 如果输入内容不为空，则关闭输入界面，发送评论
+				if (!TextUtils.isEmpty(content.getText().toString())) {
 					popup.dismiss();
-				publishComment(master, visitor, content.getText().toString(),
-						feed, type, commentAdapter);
+					publishComment(master, visitor, content.getText()
+							.toString(), feed, type, commentAdapter, comment_tv);
+				}
 			}
 		});
 	}
@@ -328,7 +336,8 @@ public class FeedbackAdapter extends BaseAdapter {
 	 * @param feed
 	 */
 	private void publishComment(String master, String visitor, String content,
-			final Feedback feed, int type, final CommentAdapter commentAdapter) {
+			final Feedback feed, int type, final CommentAdapter commentAdapter,
+			final TextView comment_tv) {
 		final Comment comment = new Comment();
 		comment.setMaster(master);
 		comment.setVisitor(visitor);
@@ -339,13 +348,16 @@ public class FeedbackAdapter extends BaseAdapter {
 			@Override
 			public void onSuccess() {
 				commentAdapter.getDataList().add(comment);
+				// 发表评论之后刷新listView
 				commentAdapter.notifyDataSetChanged();
 				notifyDataSetChanged();
 				Util.ShowToast(context, "发表评论成功");
-				// 将该评论与强语绑定到一起
+				// 将该评论与消息绑定到一起
 				BmobRelation relation = new BmobRelation();
 				relation.add(comment);
 				feed.setRelation(relation);
+				feed.setComment(feed.getComment() + 1);
+				comment_tv.setText(feed.getComment() + "");
 				feed.update(context, new UpdateListener() {
 
 					@Override
@@ -366,8 +378,8 @@ public class FeedbackAdapter extends BaseAdapter {
 		});
 	}
 
-	/***
-	 * 动态设置listview的高度 item 总布局必须是linearLayout
+	/**
+	 * 动态设置listview的高度(item总布局必须是linearLayout)
 	 * 
 	 * @param listView
 	 */
@@ -392,7 +404,7 @@ public class FeedbackAdapter extends BaseAdapter {
 	/**
 	 * 获取当前的年、月、日 对应的时间
 	 * 
-	 * @return
+	 * @return 当前时间
 	 */
 	@SuppressLint("SimpleDateFormat")
 	public String getTime() {
@@ -403,13 +415,12 @@ public class FeedbackAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * 计算时间
+	 * 计算时间（有个缺陷就是显示成“昨天”的情况没有考虑完整）
 	 * 
 	 * @param s1
 	 *            现在的时间
 	 * @param s2
 	 *            消息的时间
-	 * @return
 	 */
 	public String calculateTime(String s1, String s2) {
 		if (!TextUtils.isEmpty(s1) && !TextUtils.isEmpty(s2)) {

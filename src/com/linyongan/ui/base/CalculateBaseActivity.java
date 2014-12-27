@@ -7,7 +7,6 @@ import android.view.View.OnClickListener;
 import android.widget.Toast;
 
 import com.linyongan.ui.R;
-import com.linyongan.ui.R.id;
 import com.linyongan.view.TitleViewWithCleanBtn;
 
 /**
