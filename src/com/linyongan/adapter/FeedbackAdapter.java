@@ -134,7 +134,11 @@ public class FeedbackAdapter extends BaseAdapter {
 					Util.ShowToast(context, "请先登录。");
 					return;
 				}
-				saveLove(feedback, holder.love);
+				String s = saveLove(feedback);
+				if (s != null) {
+					holder.love.setTextColor(Color.parseColor("#003399"));
+					holder.love.setText(s);
+				}
 			}
 		});
 		holder.comment.setOnClickListener(new OnClickListener() {
@@ -268,25 +272,25 @@ public class FeedbackAdapter extends BaseAdapter {
 	 * 
 	 * @param feedback
 	 */
-	private void saveLove(final Feedback feed, TextView love_tv) {
+	private String saveLove(final Feedback feed) {
 		if (feed.isMyLove()) {
 			Util.ShowToast(context, "您已经赞过啦");
-			return;
-		}
-		feed.setLove(feed.getLove() + 1);
-		feed.setMyLove(true);
-		love_tv.setTextColor(Color.parseColor("#003399"));
-		love_tv.setText(feed.getLove() + "(已赞)");
-		feed.update(context, new UpdateListener() {
-			@Override
-			public void onSuccess() {
-				Util.ShowToast(context, "点赞成功~");
-			}
+			return null;
+		} else {
+			feed.setLove(feed.getLove() + 1);
+			feed.setMyLove(true);
+			feed.update(context, new UpdateListener() {
+				@Override
+				public void onSuccess() {
+					Util.ShowToast(context, "点赞成功~");
+				}
 
-			@Override
-			public void onFailure(int arg0, String arg1) {
-			}
-		});
+				@Override
+				public void onFailure(int arg0, String arg1) {
+				}
+			});
+			return feed.getLove() + "(已赞)";
+		}
 	}
 
 	/**
@@ -397,7 +401,7 @@ public class FeedbackAdapter extends BaseAdapter {
 		ViewGroup.LayoutParams params = listView.getLayoutParams();
 		params.height = totalHeight
 				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1))
-				+ 6;
+				+ 16;
 		listView.setLayoutParams(params);
 	}
 

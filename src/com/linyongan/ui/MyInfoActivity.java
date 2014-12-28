@@ -12,11 +12,16 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
@@ -34,35 +39,37 @@ public class MyInfoActivity extends Activity {
 
 	Button exit;
 	TextView email, name;
+	/** 点击修改头像 */
 	LinearLayout changehead;
 	ImageView head;
 	/** 标题 */
 	private TitleView titleView;
+	/** 头像的名字 */
 	String HEAD_NAME;
+	/** 当前登录的用户 */
 	Person user;
+	PopupWindow popup;
+	TextView changepw;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.myinfo);
-		changehead = (LinearLayout) findViewById(R.id.login_edit_changehead);
+		changehead = (LinearLayout) findViewById(R.id.myinfo_changehead);
 		changehead.setOnClickListener(new ButtonListener());
 
-		head = (ImageView) findViewById(R.id.login_edit_head);
-
-		exit = (Button) findViewById(R.id.login_edit_exit);
+		head = (ImageView) findViewById(R.id.myinfo_head);
+		exit = (Button) findViewById(R.id.myinfo_exit);
 		exit.setOnClickListener(new ButtonListener());
-
-		email = (TextView) findViewById(R.id.login_edit_email);
-		name = (TextView) findViewById(R.id.login_edit_name);
-
+		email = (TextView) findViewById(R.id.myinfo_email);
+		name = (TextView) findViewById(R.id.myinfo_name);
+		changepw = (TextView) findViewById(R.id.myinfo_changepw);
+		changepw.setOnClickListener(new ButtonListener());
 		titleView = (TitleView) findViewById(R.id.TitleView);
 		titleView.setTitle("个人信息");
 		titleView.setBackButtonListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
 				goBack();
 			}
 		});
@@ -86,22 +93,22 @@ public class MyInfoActivity extends Activity {
 	}
 
 	class ButtonListener implements OnClickListener {
-
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
 			switch (v.getId()) {
-			case R.id.login_edit_changehead:
+			case R.id.myinfo_changehead:
 				ShowPickDialog();
 				break;
-			case R.id.login_edit_exit:
-				testLogOut();
+			case R.id.myinfo_exit:
+				// 清除本地用户
+				BmobUser.logOut(MyInfoActivity.this);
 				goBack();
 				break;
-
+			case R.id.myinfo_changepw:
+				popupView();
+				break;
 			}
 		}
-
 	}
 
 	/**
@@ -114,7 +121,6 @@ public class MyInfoActivity extends Activity {
 		 * 可以发现里面很多东西，Intent是个很强大的东西，大家一定仔细阅读下
 		 */
 		Intent intent = new Intent(Intent.ACTION_PICK, null);
-
 		/**
 		 * 下面这句话，与其它方式写是一样的效果，如果： intent.setData(MediaStore.Images
 		 * .Media.EXTERNAL_CONTENT_URI); intent.setType(""image/*");设置数据类型
@@ -138,15 +144,12 @@ public class MyInfoActivity extends Activity {
 		// 取得裁剪后的图片
 		case 3:
 			/**
-			 * 非空判断大家一定要验证，如果不验证的话， 在剪裁之后如果发现不满意，要重新裁剪，丢弃
-			 * 当前功能时，会报NullException，小马只 在这个地方加下，大家可以根据不同情况在合适的 地方做判断处理类似情况
-			 * 
+			 * 非空判断大家一定要验证，如果不验证的话， 在剪裁之后如果发现不满意，要重新裁剪，丢弃 当前功能时，会报NullException
 			 */
 			if (data != null) {
 				setPicToView(data);
 			}
 			break;
-
 		}
 		super.onActivityResult(requestCode, resultCode, data);
 	}
@@ -160,7 +163,7 @@ public class MyInfoActivity extends Activity {
 		/*
 		 * 至于下面这个Intent的ACTION是怎么知道的，大家可以看下自己路径下的如下网页
 		 * yourself_sdk_path/docs/reference/android/content/Intent.html
-		 * 直接在里面Ctrl+F搜：CROP ，之前小马没仔细看过，其实安卓系统早已经有自带图片裁剪功能, 是直接调本地库的
+		 * 直接在里面Ctrl+F搜：CROP ，之前没仔细看过，其实安卓系统早已经有自带图片裁剪功能, 是直接调本地库的
 		 */
 		Intent intent = new Intent("com.android.camera.action.CROP");
 		intent.setDataAndType(uri, "image/*");
@@ -202,8 +205,7 @@ public class MyInfoActivity extends Activity {
 			bitmap = map;
 		}
 
-		// 该方法并不运行在UI线程当中，所以在该方法当中，不能对UI当中的控件进行设置和修改
-		// 主要用于进行异步操作。
+		// 该方法主要用于进行异步操作，并不运行在UI线程当中，所以在该方法当中，不能对UI当中的控件进行设置和修改
 		@Override
 		protected String doInBackground(Object... params) {
 			if (Util.isSDCardUsabled()) {
@@ -225,7 +227,6 @@ public class MyInfoActivity extends Activity {
 					out.close();
 				} catch (Exception e) {
 					e.printStackTrace();
-
 				}
 			}
 			return null;
@@ -246,87 +247,120 @@ public class MyInfoActivity extends Activity {
 		String imgpath = Constants.basePath + HEAD_NAME;
 		final BmobFile icon = new BmobFile(new File(imgpath));
 		icon.uploadblock(this, new UploadFileListener() {
-
 			@Override
 			public void onSuccess() {
-				// TODO Auto-generated method stub
 				user.setIcon(icon);
 				user.update(MyInfoActivity.this, new UpdateListener() {
-
 					@Override
 					public void onSuccess() {
-						// TODO Auto-generated method stub
 					}
 
 					@Override
 					public void onFailure(int arg0, String arg1) {
-						// TODO Auto-generated method stub
 					}
 				});
 			}
 
 			@Override
 			public void onFailure(int arg0, String arg1) {
-				// TODO Auto-generated method stub
 
 			}
 
 			@Override
 			public void onProgress(Integer arg0) {
-				// TODO Auto-generated method stub
-
 			}
-
 		});
-	}
-
-	/**
-	 * 清除本地用户
-	 */
-	private void testLogOut() {
-		// if (Environment.getExternalStorageState().equals(
-		// Environment.MEDIA_MOUNTED)) {
-		// // 检查文件是否存在
-		// if ((new File(HEAD_PATH + HEAD_NAME)).exists() == true) {
-		// new File(HEAD_PATH + HEAD_NAME).delete();
-		// }
-		// }
-		BmobUser.logOut(this);
 	}
 
 	/**
 	 * 验证旧密码是否正确
 	 * 
-	 * @Title: updatePassword
-	 * @Description: TODO
-	 * @param
-	 * @return void
-	 * @throws
 	 */
-	private void checkPassword() {
-		BmobQuery<Person> query = new BmobQuery<Person>();
-		final Person bmobUser = BmobUser.getCurrentUser(this, Person.class);
+	private void checkPassword(String oldPassWord, final String newPassWord) {
 		// 如果你传的密码是正确的，那么arg0.size()的大小是1，这个就代表你输入的旧密码是正确的，否则是失败的
-		query.addWhereEqualTo("password", "123456");
-		query.addWhereEqualTo("username", bmobUser.getUsername());
+		BmobQuery<Person> query = new BmobQuery<Person>();
+		query.addWhereEqualTo("password", oldPassWord);
+		query.addWhereEqualTo("username", user.getUsername());
 		query.findObjects(this, new FindListener<Person>() {
-
 			@Override
 			public void onError(int arg0, String arg1) {
-				// TODO Auto-generated method stub
-
 			}
 
 			@Override
 			public void onSuccess(List<Person> arg0) {
-				// TODO Auto-generated method stub
-				//toast("查询密码成功:" + arg0.size());
+				if (arg0.size() == 1) {
+					user.setPassword(newPassWord);
+					user.update(MyInfoActivity.this, new UpdateListener() {
 
+						@Override
+						public void onSuccess() {
+							Util.ShowToast(MyInfoActivity.this, "修改密码成功！");
+							popup.dismiss();
+						}
+
+						@Override
+						public void onFailure(int arg0, String arg1) {
+						}
+					});
+				} else {
+					Util.ShowToast(MyInfoActivity.this, "输入的旧密码不正确");
+				}
 			}
 		});
 	}
 
-	
+	/**
+	 * 弹出填写评论的窗口
+	 */
+	private void popupView() {
+		View view = getLayoutInflater().inflate(R.layout.password_popup, null);
+		popup = new PopupWindow(view, LayoutParams.MATCH_PARENT,
+				LayoutParams.MATCH_PARENT, true);
+		// 将PopupWindow显示在指定位置
+		popup.showAtLocation(findViewById(R.id.myinfo_changehead),
+				Gravity.CENTER, 0, 0);
+		popup.setOutsideTouchable(true);
+		// EditText一定要final，不能改成 EditText.getText().toString()为final
+		final EditText oldPassWord = (EditText) view
+				.findViewById(R.id.pw_oldpw);
+		final EditText newPassWord = (EditText) view
+				.findViewById(R.id.pw_newpw);
+		final EditText newpw_again = (EditText) view
+				.findViewById(R.id.pw_newpw_again);
+		Button confirm = (Button) view.findViewById(R.id.pw_confirm_btn);
+		LinearLayout layout = (LinearLayout) view
+				.findViewById(R.id.pw_popup_layout);
+		layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 点击窗口则外关闭窗口
+				if (popup != null && popup.isShowing())
+					popup.dismiss();
+			}
+		});
+		confirm.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (TextUtils.isEmpty(oldPassWord.getText().toString())) {
+					Util.ShowToast(MyInfoActivity.this, "旧密码不能为空");
+					return;
+				}
+				if (TextUtils.isEmpty(newPassWord.getText().toString())
+						|| TextUtils.isEmpty(newpw_again.getText().toString())) {
+					Util.ShowToast(MyInfoActivity.this, "新密码不能为空");
+					return;
+				}
+				if (!newPassWord.getText().toString()
+						.equals(newpw_again.getText().toString())) {
+					Util.ShowToast(MyInfoActivity.this, "两次输入的密码不一样");
+					return;
+				}
+				checkPassword(oldPassWord.getText().toString(), newPassWord
+						.getText().toString());
+			}
+		});
+	}
+
 	public void goBack() {
 		Util.goBack(MyInfoActivity.this, LearnActivity.class);
 	}

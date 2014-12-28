@@ -218,6 +218,7 @@ public class FeedbackListActivity extends BaseActivity {
 			Feedback f = FeedbackList.get(i);
 			BmobQuery<Comment> query = new BmobQuery<Comment>();
 			query.addWhereRelatedTo("relation", new BmobPointer(f));
+			query.setLimit(f.getComment());
 			query.order("createdAt");
 			query.findObjects(this, new FindListener<Comment>() {
 				@Override
@@ -244,7 +245,7 @@ public class FeedbackListActivity extends BaseActivity {
 					finishLoadComment();
 				}
 			});
-		}else{
+		} else {
 			finishLoadComment();
 		}
 	}
@@ -282,7 +283,7 @@ public class FeedbackListActivity extends BaseActivity {
 			skip = curPage * limit;
 		} else {
 			// 如果消息的数目小于5条
-			skip = FeedbackList.size();
+			skip = skip + FeedbackList.size();
 		}
 		progress.setVisibility(View.GONE);
 		// 停止加载动画

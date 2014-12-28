@@ -49,22 +49,22 @@ public class RegisterActivity extends Activity {
 				String name = name_et.getText().toString();
 				String password = password_et.getText().toString();
 				String email = email_et.getText().toString();
-
+				// 判断输入的邮箱是否合法
 				if (!Util.isEmailValid(email)) {
 					Util.errorFul(RegisterActivity.this, 301);
 					return;
 				}
-
+				// 判断输入的昵称是否为空
 				if (TextUtils.isEmpty(name)) {
 					Util.errorFul(RegisterActivity.this, 1);
 					return;
 				}
-
+				// 判断输入的密码是否为空
 				if (TextUtils.isEmpty(password)) {
 					Util.errorFul(RegisterActivity.this, 2);
 					return;
 				}
-
+				//判断网络是否连接
 				if (!Util.isNetworkConnected(RegisterActivity.this)) {
 					Util.errorFul(RegisterActivity.this, 9016);
 					return;
