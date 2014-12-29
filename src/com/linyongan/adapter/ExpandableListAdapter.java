@@ -12,7 +12,6 @@ import com.linyongan.ui.R;
 
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
-	private Context context;
 	private LayoutInflater inflater;
 	/** 栏目 */
 	private String[] item = new String[] {};
@@ -21,7 +20,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
 
 	public ExpandableListAdapter(Context context, String[] item,
 			String[][] subItem) {
-		this.context = context;
 		inflater = LayoutInflater.from(context);
 		this.item = item;
 		this.subItem = subItem;

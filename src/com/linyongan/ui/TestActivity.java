@@ -26,7 +26,7 @@ public class TestActivity extends BaseActivity {
 	@Override
 	public void setContentView() {
 		// TODO Auto-generated method stub
-		setContentView(R.layout.test_main);
+		setContentView(R.layout.activity_test);
 	}
 
 	@Override

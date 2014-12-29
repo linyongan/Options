@@ -9,7 +9,7 @@ import com.linyongan.util.Util;
 public class AboutActivity extends BaseActivity {
 	@Override
 	public void setContentView() {
-		setContentView(R.layout.about);
+		setContentView(R.layout.activity_about);
 	}
 
 	@Override

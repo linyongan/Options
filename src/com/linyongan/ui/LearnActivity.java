@@ -32,6 +32,7 @@ import com.linyongan.util.Util;
 
 /**
  * 期权学堂页面
+ * https://github.com/linyongan/Options.git
  */
 public class LearnActivity extends BaseActivity {
 	/** 标记，第一次运行加载数据 */
@@ -60,7 +61,7 @@ public class LearnActivity extends BaseActivity {
 	@Override
 	public void setContentView() {
 		// TODO Auto-generated method stub
-		setContentView(R.layout.learn);
+		setContentView(R.layout.activity_learn);
 	}
 
 	@Override

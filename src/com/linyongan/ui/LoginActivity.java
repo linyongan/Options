@@ -28,7 +28,7 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.login);
+		setContentView(R.layout.activity_login);
 
 		name_et = (EditText) findViewById(R.id.login_username_et);
 		password_et = (EditText) findViewById(R.id.login_password_et);

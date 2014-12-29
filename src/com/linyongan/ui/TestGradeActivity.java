@@ -36,7 +36,7 @@ public class TestGradeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		/* …Ë÷√»´∆¡ */
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.test_grade);
+		setContentView(R.layout.activity_test_grade);
 
 		dbManger = new GradeDbManger(this);
 		listView = (MyListView) findViewById(R.id.test_grade_listview);
@@ -64,7 +64,7 @@ public class TestGradeActivity extends Activity {
 		cursor = dbManger.searchGrade();
 		listAdapter = new SimpleCursorAdapter(
 				this,
-				R.layout.test_grade_item,
+				R.layout.item_test_grade,
 				cursor,
 				new String[] { Constants.GradeTable.TIME,
 						Constants.GradeTable.NAME, Constants.GradeTable.GRADE },

@@ -11,6 +11,8 @@ public class Constants {
 	/** 应用的ID */
 	public static String Bmob_APPID = "fcaada794a793baefb7ce5ddbe9e9071";
 	/** 文件的基础路径 */
+	//用模拟器测试时用
+//	public static String basePath = "/data/data/com.linyongan.ui/databases/";
 	public static String basePath = Environment.getExternalStorageDirectory()
 			.getPath() + "/Options/";
 	/** 数据库名字 */

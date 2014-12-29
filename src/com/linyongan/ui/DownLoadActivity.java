@@ -56,7 +56,7 @@ public class DownLoadActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.download);
+		setContentView(R.layout.activity_download);
 		urls = new String[22];
 		mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 

@@ -17,17 +17,17 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.linyongan.adapter.SortAdapter;
 import com.linyongan.config.Constants;
 import com.linyongan.db.NounDbManger;
-import com.linyongan.sortlistview.CharacterParser;
-import com.linyongan.sortlistview.ClearEditText;
-import com.linyongan.sortlistview.PinyinComparator;
-import com.linyongan.sortlistview.SideBar;
-import com.linyongan.sortlistview.SideBar.OnTouchingLetterChangedListener;
-import com.linyongan.sortlistview.SortAdapter;
-import com.linyongan.sortlistview.SortModel;
+import com.linyongan.model.SortModel;
 import com.linyongan.ui.base.BaseActivity;
+import com.linyongan.util.CharacterParser;
+import com.linyongan.util.PinyinComparator;
 import com.linyongan.util.Util;
+import com.linyongan.view.ClearEditText;
+import com.linyongan.view.SideBar;
+import com.linyongan.view.SideBar.OnTouchingLetterChangedListener;
 
 /**
  * 名词查询页面。我们对ClearEditText设置addTextChangedListener监听，当输入框内容发生变化根据里面的值过滤ListView，
@@ -58,7 +58,7 @@ public class SearchActivity extends BaseActivity {
 	@Override
 	public void setContentView() {
 		// TODO Auto-generated method stub
-		setContentView(R.layout.search);
+		setContentView(R.layout.activity_search);
 	}
 
 	@Override
@@ -150,7 +150,7 @@ public class SearchActivity extends BaseActivity {
 	 * @param position
 	 */
 	private void popupView(int position) {
-		View root = getLayoutInflater().inflate(R.layout.search_popup, null);
+		View root = getLayoutInflater().inflate(R.layout.popup_search, null);
 		// 创建PopupWindow对象
 		final PopupWindow popup = new PopupWindow(root,
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);

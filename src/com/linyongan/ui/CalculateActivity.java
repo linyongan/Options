@@ -32,7 +32,7 @@ public class CalculateActivity extends BaseActivity {
 
 	@Override
 	public void setContentView() {
-		setContentView(R.layout.calculate);
+		setContentView(R.layout.activity_calculate);
 	}
 
 	@Override

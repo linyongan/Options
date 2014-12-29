@@ -54,7 +54,7 @@ public class MyInfoActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.myinfo);
+		setContentView(R.layout.activity_myinfo);
 		changehead = (LinearLayout) findViewById(R.id.myinfo_changehead);
 		changehead.setOnClickListener(new ButtonListener());
 
@@ -313,7 +313,7 @@ public class MyInfoActivity extends Activity {
 	 * 弹出填写评论的窗口
 	 */
 	private void popupView() {
-		View view = getLayoutInflater().inflate(R.layout.password_popup, null);
+		View view = getLayoutInflater().inflate(R.layout.popup_password, null);
 		popup = new PopupWindow(view, LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT, true);
 		// 将PopupWindow显示在指定位置

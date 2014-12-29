@@ -80,5 +80,5 @@
         android:listSelector="@android:color/transparent"
         android:scrollbars="none"
         ptr:ptrMode="both" />
-
+    
 </LinearLayout>

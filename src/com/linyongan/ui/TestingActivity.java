@@ -96,7 +96,7 @@ public class TestingActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		/* 设置全屏 */
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.testing);
+		setContentView(R.layout.activity_testing);
 
 		// 随机获取10道题目的id
 		getIdArray();
@@ -271,7 +271,7 @@ public class TestingActivity extends Activity {
 	 * 创建新视图
 	 */
 	private void newView() {
-		View view = inflater.inflate(R.layout.testing_item, null);
+		View view = inflater.inflate(R.layout.item_testing, null);
 		question = (TextView) view.findViewById(R.id.testing_item_textview1);
 		option1 = (RadioButton) view
 				.findViewById(R.id.testing_item_radioButton1);
@@ -356,7 +356,7 @@ public class TestingActivity extends Activity {
 	 * 加载最后一View
 	 */
 	private void addLastView() {
-		View view = inflater.inflate(R.layout.testing_item1, null);
+		View view = inflater.inflate(R.layout.item_testing1, null);
 		collect_tv.setBackgroundResource(R.drawable.testing_discollect);
 		final Button button = (Button) view
 				.findViewById(R.id.testing_item1_btn);

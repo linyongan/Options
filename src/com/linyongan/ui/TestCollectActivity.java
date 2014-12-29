@@ -35,7 +35,7 @@ public class TestCollectActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		/* 设置全屏 */
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.test_collect);
+		setContentView(R.layout.activity_test_collect);
 		dbManger = new TestDbManger(this);
 		listView = (MyListView) findViewById(R.id.test_collect_listview);
 		listView.setDelButtonClickListener(new DelButtonClickListener() {
@@ -63,7 +63,7 @@ public class TestCollectActivity extends Activity {
 		// 从数据库查找数据，显示在listView上
 		dbManger.open();
 		cursor = dbManger.getCollect();
-		listAdapter = new SimpleCursorAdapter(this, R.layout.test_collect_item,
+		listAdapter = new SimpleCursorAdapter(this, R.layout.item_test_collect,
 				cursor, new String[] { Constants.TestTable.ID,
 						Constants.TestTable.QUESTION,
 						Constants.TestTable.ANSWER }, new int[] {

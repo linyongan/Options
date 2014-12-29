@@ -1,16 +1,17 @@
 package com.linyongan.adapter;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.support.v4.view.ViewPager;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,14 +19,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.WindowManager.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -35,10 +37,13 @@ import cn.bmob.v3.listener.UpdateListener;
 
 import com.linyongan.config.Constants;
 import com.linyongan.model.Comment;
+import com.linyongan.model.FaceText;
 import com.linyongan.model.Feedback;
 import com.linyongan.model.Person;
 import com.linyongan.ui.R;
+import com.linyongan.util.FaceTextUtils;
 import com.linyongan.util.Util;
+import com.linyongan.view.EmoticonsEditText;
 
 public class FeedbackAdapter extends BaseAdapter {
 
@@ -68,7 +73,11 @@ public class FeedbackAdapter extends BaseAdapter {
 	/** 目前发表评论的人 */
 	private String visitor;
 	/** 填写评论的EditText */
-	private EditText content;
+	private EmoticonsEditText content;
+	private LinearLayout layout_emo;
+	private Button btn_chat_emo, btn_chat_keyboard;
+	List<FaceText> emos;
+	private ViewPager pager_emo;
 
 	public FeedbackAdapter(Activity context, List<Feedback> feedbacks) {
 		this.context = context;
@@ -105,7 +114,7 @@ public class FeedbackAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 
-			convertView = inflater.inflate(R.layout.feedback_item, null);
+			convertView = inflater.inflate(R.layout.item_feedback, null);
 			holder.content = (TextView) convertView
 					.findViewById(R.id.tv_content);
 			holder.time = (TextView) convertView.findViewById(R.id.tv_time);
@@ -203,10 +212,11 @@ public class FeedbackAdapter extends BaseAdapter {
 		});
 
 		holder.commetLv.setAdapter(commentAdapter);
-		setListViewHeightBasedOnChildren(holder.commetLv);
+		Util.setListViewHeightBasedOnChildren(holder.commetLv);
 
 		holder.content.setText(feedback.getContent());
-		holder.time.setText(calculateTime(getTime(), feedback.getCreatedAt()));
+		holder.time.setText(calculateTime(Util.getTime(),
+				feedback.getCreatedAt()));
 		holder.contacts.setText(feedback.getContacts());
 		if (feedback.getLove() != 0) {
 			if (feedback.isMyLove()) {
@@ -233,14 +243,6 @@ public class FeedbackAdapter extends BaseAdapter {
 				holder.head.setImageBitmap(bit);
 			}
 		}
-		// // 用手机模拟器测试
-		// if ((new File("/data/data/com.linyongan.ui/databases/"
-		// + feedback.getContacts() + ".jpg")).exists() == true) {
-		// Bitmap bit = BitmapFactory
-		// .decodeFile("/data/data/com.linyongan.ui/databases/"
-		// + feedback.getContacts() + ".jpg");
-		// holder.head.setImageBitmap(bit);
-		// }
 		return convertView;
 	}
 
@@ -265,6 +267,53 @@ public class FeedbackAdapter extends BaseAdapter {
 		TextView love;
 		TextView comment;
 		ListView commetLv;
+	}
+
+	private View getGridView(final int i) {
+		View view = View.inflate(context, R.layout.include_emo_gridview, null);
+		GridView gridview = (GridView) view.findViewById(R.id.gridview);
+		List<FaceText> list = new ArrayList<FaceText>();
+		switch (i) {
+		case 0:
+			list.addAll(emos.subList(0, 28));
+			break;
+		case 1:
+			list.addAll(emos.subList(28, 56));
+			break;
+		case 2:
+			list.addAll(emos.subList(56, emos.size()));
+			break;
+		}
+		final EmoteAdapter gridAdapter = new EmoteAdapter(context, list);
+		gridview.setAdapter(gridAdapter);
+		gridview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				FaceText name = (FaceText) gridAdapter.getItem(position);
+				String key = name.text.toString();
+				try {
+					if (content != null && !TextUtils.isEmpty(key)) {
+						int start = content.getSelectionStart();
+						CharSequence content1 = content.getText().insert(start,
+								key);
+						content.setText(content1);
+						// 定位光标位置
+						CharSequence info = content.getText();
+						if (info instanceof Spannable) {
+							Spannable spanText = (Spannable) info;
+							Selection.setSelection(spanText,
+									start + key.length());
+						}
+					}
+				} catch (Exception e) {
+
+				}
+
+			}
+		});
+		return view;
 	}
 
 	/**
@@ -298,7 +347,7 @@ public class FeedbackAdapter extends BaseAdapter {
 	 */
 	private void popupView(String hint, final Feedback feed,
 			final CommentAdapter commentAdapter, final TextView comment_tv) {
-		View view = inflater.inflate(R.layout.comment_popup, null);
+		View view = inflater.inflate(R.layout.popup_comment, null);
 		popup = new PopupWindow(view, LayoutParams.MATCH_PARENT,
 				LayoutParams.MATCH_PARENT, true);
 		// 将PopupWindow显示在指定位置
@@ -306,20 +355,40 @@ public class FeedbackAdapter extends BaseAdapter {
 				context.findViewById(R.id.feedback_relativeLayout),
 				Gravity.CENTER, 0, 0);
 		popup.setOutsideTouchable(true);
-		content = (EditText) view.findViewById(R.id.comment_popup_content);
+		// 输入框
+		content = (EmoticonsEditText) view
+				.findViewById(R.id.comment_popup_content);
 		content.setHint(hint);
-		Button commit = (Button) view.findViewById(R.id.comment_popup_commit);
-		LinearLayout layout = (LinearLayout) view
-				.findViewById(R.id.comment_popup_layout);
-		layout.setOnClickListener(new OnClickListener() {
-
+		// 最左边
+		btn_chat_emo = (Button) view.findViewById(R.id.comment_popup_emo);
+		btn_chat_emo.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// 点击窗口则外关闭窗口
-				if (popup != null && popup.isShowing())
-					popup.dismiss();
+				hideSoftInputView(context, content);
+				layout_emo.setVisibility(View.VISIBLE);
 			}
 		});
+		// 最右边
+		btn_chat_keyboard = (Button) view
+				.findViewById(R.id.comment_popup_keyboard);
+		btn_chat_keyboard.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				showSoftInputView(context, content);
+				layout_emo.setVisibility(View.GONE);
+			}
+		});
+		// 最下面
+		layout_emo = (LinearLayout) view.findViewById(R.id.layout_emo);
+		pager_emo = (ViewPager) view.findViewById(R.id.pager_emo);
+		emos = FaceTextUtils.faceTexts;
+		List<View> views = new ArrayList<View>();
+		for (int i = 0; i < 3; ++i) {
+			views.add(getGridView(i));
+		}
+		pager_emo.setAdapter(new EmoViewPagerAdapter(views));
+
+		Button commit = (Button) view.findViewById(R.id.comment_popup_commit);
 		commit.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -328,6 +397,19 @@ public class FeedbackAdapter extends BaseAdapter {
 					popup.dismiss();
 					publishComment(master, visitor, content.getText()
 							.toString(), feed, type, commentAdapter, comment_tv);
+					hideSoftInputView(context, content);
+				}
+			}
+		});
+		LinearLayout layout = (LinearLayout) view
+				.findViewById(R.id.comment_popup_layout);
+		layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// 点击窗口则外关闭窗口
+				if (popup != null && popup.isShowing()) {
+					hideSoftInputView(context, content);
+					popup.dismiss();
 				}
 			}
 		});
@@ -383,42 +465,6 @@ public class FeedbackAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * 动态设置listview的高度(item总布局必须是linearLayout)
-	 * 
-	 * @param listView
-	 */
-	public void setListViewHeightBasedOnChildren(ListView listView) {
-		ListAdapter listAdapter = listView.getAdapter();
-		if (listAdapter == null) {
-			return;
-		}
-		int totalHeight = 0;
-		for (int i = 0; i < listAdapter.getCount(); i++) {
-			View listItem = listAdapter.getView(i, null, listView);
-			listItem.measure(0, 0);
-			totalHeight += listItem.getMeasuredHeight();
-		}
-		ViewGroup.LayoutParams params = listView.getLayoutParams();
-		params.height = totalHeight
-				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1))
-				+ 16;
-		listView.setLayoutParams(params);
-	}
-
-	/**
-	 * 获取当前的年、月、日 对应的时间
-	 * 
-	 * @return 当前时间
-	 */
-	@SuppressLint("SimpleDateFormat")
-	public String getTime() {
-		Date d = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-		String dateNowStr = formatter.format(d);
-		return dateNowStr;
-	}
-
-	/**
 	 * 计算时间（有个缺陷就是显示成“昨天”的情况没有考虑完整）
 	 * 
 	 * @param s1
@@ -458,5 +504,21 @@ public class FeedbackAdapter extends BaseAdapter {
 			return s2.substring(0, s2.length() - 3);
 		}
 		return null;
+	}
+
+	// 显示软键盘
+	public void showSoftInputView(Activity context, EditText content) {
+		InputMethodManager imm = (InputMethodManager) context
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.showSoftInput(content, InputMethodManager.SHOW_FORCED);
+	}
+
+	/**
+	 * 隐藏软键盘
+	 */
+	public void hideSoftInputView(Activity context, EditText content) {
+		InputMethodManager imm = (InputMethodManager) context
+				.getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(content.getWindowToken(), 0); // 强制隐藏键盘
 	}
 }

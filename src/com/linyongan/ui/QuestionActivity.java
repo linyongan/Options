@@ -33,7 +33,7 @@ public class QuestionActivity extends BaseActivity {
 	@Override
 	public void setContentView() {
 		// TODO Auto-generated method stub
-		setContentView(R.layout.question);
+		setContentView(R.layout.activity_question);
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class QuestionActivity extends BaseActivity {
 			} while (cursor.moveToNext());
 
 		}
-		adapter = new ArrayAdapter<String>(this, R.layout.question_item,
+		adapter = new ArrayAdapter<String>(this, R.layout.item_question,
 				strings);
 		listView.setAdapter(adapter);
 		dbManger.close();
@@ -98,7 +98,7 @@ public class QuestionActivity extends BaseActivity {
 	 * @param position
 	 */
 	private void popupView(int position) {
-		View root = getLayoutInflater().inflate(R.layout.question_popup, null);
+		View root = getLayoutInflater().inflate(R.layout.popup_question, null);
 		// 创建PopupWindow对象
 		final PopupWindow popup = new PopupWindow(root,
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, true);

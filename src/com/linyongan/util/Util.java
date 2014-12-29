@@ -1,5 +1,9 @@
 package com.linyongan.util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +11,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 import cn.bmob.v3.BmobUser;
 
@@ -34,6 +42,60 @@ public class Util {
 			}
 			mToast.show();
 		}
+	}
+
+	/**
+	 * 将textview中的字符全角化
+	 * @param input
+	 * @return
+	 */
+	public static String ToDBC(String input) {
+		char[] c = input.toCharArray();
+		for (int i = 0; i < c.length; i++) {
+			if (c[i] == 12288) {
+				c[i] = (char) 32;
+				continue;
+			}
+			if (c[i] > 65280 && c[i] < 65375)
+				c[i] = (char) (c[i] - 65248);
+		}
+		return new String(c);
+	}
+
+	/**
+	 * 动态设置listview的高度(item总布局必须是linearLayout)
+	 * 
+	 * @param listView
+	 */
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+		ListAdapter listAdapter = listView.getAdapter();
+		if (listAdapter == null) {
+			return;
+		}
+		int totalHeight = 0;
+		for (int i = 0; i < listAdapter.getCount(); i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight
+				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1))
+				+ 17;
+		listView.setLayoutParams(params);
+	}
+
+	/**
+	 * 获取当前的年、月、日 对应的时间
+	 * 
+	 * @return 当前时间
+	 */
+	@SuppressLint("SimpleDateFormat")
+	public static String getTime() {
+		Date d = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		String dateNowStr = formatter.format(d);
+		return dateNowStr;
 	}
 
 	/**
@@ -184,6 +246,7 @@ public class Util {
 	public static boolean isSDCardUsabled() {
 		return Environment.getExternalStorageState().equals(
 				Environment.MEDIA_MOUNTED);
-
+		//用模拟器测试时用
+//        return true;
 	}
 }

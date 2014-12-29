@@ -83,7 +83,7 @@ public class MyListView extends ListView {
 		mInflater = LayoutInflater.from(context);
 		touchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
 
-		View view = mInflater.inflate(R.layout.delete_button, null);
+		View view = mInflater.inflate(R.layout.popup_delete_button, null);
 		mDelBtn = (Button) view.findViewById(R.id.delete_button);
 		mPopupWindow = new PopupWindow(view,
 				LinearLayout.LayoutParams.WRAP_CONTENT,

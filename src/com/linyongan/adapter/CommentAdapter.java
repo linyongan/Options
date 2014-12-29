@@ -52,7 +52,7 @@ public class CommentAdapter extends BaseAdapter {
 		ViewHolder viewHolder;
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
-			convertView = inflater.inflate(R.layout.comment_item, null);
+			convertView = inflater.inflate(R.layout.item_comment, null);
 			viewHolder.master = (TextView) convertView
 					.findViewById(R.id.comment_master);
 			viewHolder.content = (TextView) convertView

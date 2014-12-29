@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comment_popup_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#88000000"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="170dp"
+        android:background="@drawable/base_comment_emo_bar"
+        android:gravity="center_vertical"
+        android:minHeight="50dp"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" >
+
+        <Button
+            android:id="@+id/comment_popup_keyboard"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btn_chat_keyboard_selector"
+            android:gravity="center" >
+        </Button>
+
+        <Button
+            android:id="@+id/comment_popup_emo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="6dp"
+            android:background="@drawable/btn_chat_emo_selector"
+            android:gravity="center" />
+
+        <com.linyongan.view.EmoticonsEditText
+            android:id="@+id/comment_popup_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/base_edit_input"
+            android:imeOptions="flagNoExtractUi"
+            android:minHeight="40dp"
+            android:padding="5dp" />
+
+        <Button
+            android:id="@+id/comment_popup_commit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/btn_chat_send_selector"
+            android:gravity="center" >
+        </Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_emo"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/base_comment_emo_bar"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager_emo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</LinearLayout>
